@@ -161,6 +161,24 @@ react project and demo
 
             MixinLog.method();
 
+3. 样式
+
+    内联样式
+
+        const styleComponentHeader = {
+            header : {
+                css...
+                // 驼峰式命名属性, 属性值需要加引号
+            }
+        }
+        // 外联样式 使用 className 命名 class
+        <header style={styleComponentHeader.header} class="smallFontSize">
 
 
+    内联样式属性控制
+
+        paddingTop : (this.state.minHeader) ? '3px' : "15px",
     
+    JSX 和 CSS 互转
+
+        http://staxmanade.com/CssToReact/
