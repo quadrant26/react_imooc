@@ -1,0 +1,14 @@
+.smallFontSize h1{
+    font-size:14px;
+}
+
+.smallFooterFontSize{
+    background-color:#333;
+    padding-top:15px;
+    padding-bottom:15px;
+}
+
+.smallFooterFontSize h1{
+    font-size:12px;
+    color:#fff;
+}
