@@ -188,3 +188,28 @@ react project and demo
     JSX 和 CSS 互转
 
         http://staxmanade.com/CssToReact/
+
+4. 路由
+
+    npm install --save react-router
+
+        import { Router, Route, hashHistory } from 'react-router';
+
+        <Router history={hashHistory}>
+            <Route component={ComponentName} path='/'>
+                <Route component={DetailComponent} path="detail"></Route>
+            </Route>
+            <Route component={ComponentName} path='list'></Route>
+        </Router>
+
+    获取子路由
+
+        {this.props.children}
+
+    路由参数    
+
+        path="list/:id"
+
+        获取参数内容
+
+            { this.props.params.id }
