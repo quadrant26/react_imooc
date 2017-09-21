@@ -5,9 +5,26 @@ import BodyChildComponent from './bodyChild';
 import MixinLog from './mixin';
 import ReactMixin from 'react-mixin';
 
+import { Input, Select, Icon } from 'antd';
+
 const defaultProps = {
     username : "这是一个默认的用户名"
 }
+
+const selectBefore = (
+    <Select defaultValue="Http://" style={{ width: 80 }}>
+      <Option value="Http://">Http://</Option>
+      <Option value="Https://">Https://</Option>
+    </Select>
+);
+const selectAfter = (
+    <Select defaultValue=".com" style={{ width: 70 }}>
+      <Option value=".com">.com</Option>
+      <Option value=".jp">.jp</Option>
+      <Option value=".cn">.cn</Option>
+      <Option value=".org">.org</Option>
+    </Select>
+);
 
 export default class BodyIndexComponent extends React.Component{
 
@@ -59,6 +76,11 @@ export default class BodyIndexComponent extends React.Component{
                 {/* <p>{this.state.username} {this.props.userid} {this.props.username}</p> */}
                 <p>接收到父页面的属性：userid： {this.props.userid} username： {this.props.username}</p>
                 <p>{this.state.age}</p>
+                <Input placeholder="Basic usage" />
+                <br />
+                <div style={{ marginBottom: 16 }}>
+                    <Input addonBefore={selectBefore} addonAfter={selectAfter} defaultValue="mysite" />
+                </div>
                 <input type="button" id="submitButton" ref="submitButton" value="提交" onClick={this.changeUserInfo.bind(this)} />
 
                 <BodyChildComponent {...this.props} handleChildValueChange={this.handleChildValueChange.bind(this)} />
