@@ -178,6 +178,12 @@ react project and demo
     内联样式属性控制
 
         paddingTop : (this.state.minHeader) ? '3px' : "15px",
+
+    导入 css 文件
+
+        var cssFile = require(path);
+
+        <element className={cssFile.className}></element>
     
     JSX 和 CSS 互转
 
