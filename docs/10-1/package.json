@@ -1,0 +1,28 @@
+{
+  "name": "docs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/js/root.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --watch",
+    "dev": "webpack-dev-server --devtool eval --progress --open --hot --port 8888"
+  },
+  "author": "quadrant",
+  "license": "ISC",
+  "dependencies": {
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babelify": "^7.3.0",
+    "path": "^0.12.7",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-mixin": "^2.0.2",
+    "react-router": "^2.8.1",
+    "sockjs-client": "^1.1.4",
+    "webpack": "^2.2.0",
+    "webpack-dev-server": "^2.2.0",
+    "webpack-sources": "^1.0.1"
+  }
+}
