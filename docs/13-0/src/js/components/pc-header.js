@@ -52,6 +52,7 @@ class PcHeaderComponent extends React.Component{
         var formData = this.props.form.getFieldsValue();
         var url;
         
+        // 判断是登录还是注册
         if( this.state.action == "login"){
             url = 'http://localhost:8866/react_imooc/login.php?g_username='+ formData.g_username +'&g_password=' + formData.g_password;
         }else{
