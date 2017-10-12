@@ -6,25 +6,19 @@ import ReactDOM from 'react-dom';
 import MediaQuery from 'react-responsive';
 
 // 导入header && footer 模块
-import PcHeaderComponent from './components/pc-header';
-import PcFooterComponent from './components/pc-footer';
-
-import MobileHeaderComponent from './components/mobile-header';
-import MobileFooterComponent from './components/mobile-footer';
-
+import PCIndexComponent from './components/pc_index';
+import MobileIndexComponent from './components/mobile_index';
 
 export default class IndexComponent extends React.Component{
     render() {
         return (
             <div>
                 <MediaQuery query='(min-device-width:1224px)'>
-                    <PcHeaderComponent></PcHeaderComponent>
-                    <PcFooterComponent></PcFooterComponent>
+                    <PCIndexComponent></PCIndexComponent>
                 </MediaQuery>
 
                 <MediaQuery query='(max-device-width:1224px)'>
-                    <MobileHeaderComponent></MobileHeaderComponent>
-                    <MobileFooterComponent></MobileFooterComponent>
+                    <MobileIndexComponent></MobileIndexComponent>
                 </MediaQuery>
             </div>
         )
