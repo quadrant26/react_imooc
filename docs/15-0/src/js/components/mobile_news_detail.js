@@ -3,6 +3,7 @@ import {Row, Col, BackTop} from 'antd';
 
 import MobileHeaderComponent from './mobile-header';
 import MobileFooterComponent from './mobile-footer';
+import CommonCommentComponent from './common_comments';
 
 export default class MobileNewsDetailComponent extends React.Component{
 
@@ -41,6 +42,7 @@ export default class MobileNewsDetailComponent extends React.Component{
                     <Row>
                         <Col span={24} className="container">
                             <div className="articleContainer" dangerouslySetInnerHTML={this.createMarkup()}></div>
+                            <CommonCommentComponent></CommonCommentComponent>
                         </Col>
                     </Row>
                 </div>

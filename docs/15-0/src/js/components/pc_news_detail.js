@@ -4,6 +4,7 @@ import PCNewsImageBlock from './pc_news_image_block';
 
 import PcHeaderComponent from './pc-header';
 import PcFooterComponent from './pc-footer';
+import CommonCommentComponent from './common_comments';
 
 export default class PcNewsDetailComponent extends React.Component{
 
@@ -22,6 +23,7 @@ export default class PcNewsDetailComponent extends React.Component{
         fetch("http://newsapi.gugujiankong.com/Handler.ashx?action=getnewsitem&uniquekey=" + this.props.params.uniquekey, myFetchOptions)
         .then(response => response.json())
         .then(json => {
+            
             this.setState({
                 newsItem : json
             });
@@ -42,6 +44,7 @@ export default class PcNewsDetailComponent extends React.Component{
                     <Col span={2}></Col>
                     <Col span={14} className="container">
                         <div className="articleContainer" dangerouslySetInnerHTML={this.createMarkup()}></div>
+                        <CommonCommentComponent></CommonCommentComponent>
                     </Col>
                     <Col span={6}>
                         <PCNewsImageBlock count={30} type="top" cardTitle="相关新闻" imageWidth="150px"></PCNewsImageBlock>
