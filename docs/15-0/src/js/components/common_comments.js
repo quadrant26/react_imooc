@@ -14,14 +14,15 @@ class CommonCommentComponent extends React.Component{
         var myFetchOptions = {
             method : "GET"
         }
-        var _this =this;
         
         fetch("http://newsapi.gugujiankong.com/Handler.ashx?action=getcomments&uniquekey=" + this.props.uniquekey, myFetchOptions)
         .then(response => response.json())
         .then(json => {
-            _this.setState = {
+            this.setState = {
                 comments : json
             }
+            
+            console.log(this.setState);
         })
     }
 
@@ -56,6 +57,7 @@ class CommonCommentComponent extends React.Component{
     
     render (){
         let { getFieldDecorator } = this.props.form;
+        console.log( this.state );
         const { comments } = this.state;
         const commentList = comments.length
             ?
@@ -67,7 +69,8 @@ class CommonCommentComponent extends React.Component{
                 )
             }) 
             : '没有任何评论！';
-
+        
+        console.log(comments);
         return (
             <div className="comment">
                 <Row>
@@ -75,7 +78,13 @@ class CommonCommentComponent extends React.Component{
                         {commentList}
                         <Form onSubmit={this.handleSubmit.bind(this)}>
                             <FormItem label="您的评论">
-                                <Input type="textarea" placeholder="输入您的评论" {...getFieldDecorator('remark', {initialValue: ''})}></Input>
+                                {getFieldDecorator('remark', {
+                                    rules: [{ required: true, message: 'Please input your username!' }],
+                                })(
+                                    
+                                    <Input type="textarea" placeholder="输入您的评论" required ></Input>
+                                )}
+                                {/* <Input type="textarea" placeholder="输入您的评论" {...getFieldDecorator('remark', {initialValue: ''})}></Input> */}
                             </FormItem>
                             <Button type="primary" htmlType="submit">提交评论</Button>
                             &nbsp;&nbsp;
