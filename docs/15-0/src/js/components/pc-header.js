@@ -51,28 +51,49 @@ class PcHeaderComponent extends React.Component{
         };
         var formData = this.props.form.getFieldsValue();
         var url;
+
         
         // 判断是登录还是注册
-        if( this.state.action == "login"){
-            url = 'http://localhost:8866/react_imooc/login.php?g_username='+ formData.g_username +'&g_password=' + formData.g_password;
-        }else{
-            url = 'http://localhost:8866/react_imooc/reg.php?r_username='+ formData.r_username +'&r_password=' + formData.r_password  +'&r_confrimPassword=' + formData.r_confrimPassword ;
-        };
+        // if( this.state.action == "login"){
+        //     url = 'http://localhost:8866/react_imooc/login.php?g_username='+ formData.g_username +'&g_password=' + formData.g_password;
+        // }else{
+        //     url = 'http://localhost:8866/react_imooc/reg.php?r_username='+ formData.r_username +'&r_password=' + formData.r_password  +'&r_confrimPassword=' + formData.r_confrimPassword ;
+        // };
         
-        fetch(url)
+        // fetch(url)
+        fetch("http://newsapi.gugujiankong.com/Handler.ashx?action=" + this.state.action
+		+ "&username="+formData.username+"&password="+formData.password
+		+"&r_userName=" + formData.r_userName + "&r_password="
+		+ formData.r_password + "&r_confirmPassword="
+		+ formData.r_confirmPassword, myFetchOptions)
         .then( res => res.json())
         .then( json => {
-            if( json.code === 1){
-                message.error(json.error_msg);
-            }else{
-                this.setModalVisible(false);
-                this.setState({
-                    userNickName : formData.g_username || formData.r_username,
-                    hasLogined: true,
-                    modalVisible: false
-                });
-            };
+            console.log(json);
+            // if( json.code === 1){
+            //     message.error(json.error_msg);
+            // }else{
+            //     this.setState({
+            //         userNickName : json.NickUserName ? json.NickUserName : formData.userName,
+            //         userid: json.UserId
+            //     });
+            //     localStorage.userid= json.UserId;
+            //     localStorage.userNickName = json.NickUserName ? json.NickUserName : formData.userName;
+            // };
+
+            this.setState({
+                userNickName : json.NickUserName,
+                userid: json.UserId
+            });
+            localStorage.userid= json.UserId;
+            localStorage.userNickName = json.NickUserName;
+
         });
+
+        if (this.state.action=="login") {
+            this.setState({hasLogined:true});
+        }
+        message.success("请求成功！");
+        this.setModalVisible(false);
     }
 
     // 登录还是注册弹出框显示
@@ -153,26 +174,32 @@ class PcHeaderComponent extends React.Component{
                             <TabPane tab="登录" key="1">
                                 <Form layout="horizontal" onSubmit={this.handleSubmit.bind(this)}>
                                     <FormItem label="账户">
-                                        {getFieldDecorator('g_username', {
+                                        {getFieldDecorator('username', {
                                             rules: [{ required: true, message: 'Please input your username!' }],
                                         })(
                                             <Input  prefix={<Icon type="user" style={{ fontSize: 13 }} />} required placeholder="请输入您的账号"/>
                                         )}
                                     </FormItem>
                                     <FormItem label="密码">
-                                        {getFieldDecorator('g_password', {
+                                        {getFieldDecorator('password', {
                                             rules: [{ required: true, message: 'Please input your password!'}],
                                         })(
                                             <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} required type="password" placeholder="请输入您的密码"/>
                                         )}
                                     </FormItem>
+                                    {/* <FormItem label="账户">
+                                        <Input placeholder="请输入您的账号" {...getFieldDecorator('userName')}/>
+                                    </FormItem>
+                                    <FormItem label="密码">
+                                        <Input type="password" placeholder="请输入您的密码" {...getFieldDecorator('password')}/>
+                                    </FormItem> */}
                                     <Button type="primary" htmlType="submit">登录</Button>
                                 </Form>
                             </TabPane>
                             <TabPane tab="注册" key="2">
                                 <Form layout="horizontal" onSubmit={this.handleSubmit.bind(this)}>
                                     <FormItem label="账户">
-                                        {getFieldDecorator('r_username', {
+                                        {getFieldDecorator('r_userName', {
                                             rules: [{ required: true, message: 'Please input your username!' }],
                                         })(
                                             <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} required placeholder="请输入您的账号"/>
@@ -186,12 +213,21 @@ class PcHeaderComponent extends React.Component{
                                         )}
                                     </FormItem>
                                     <FormItem label="确认密码">
-                                        {getFieldDecorator('r_confrimPassword', {
+                                        {getFieldDecorator('r_confirmPassword', {
                                             rules: [{ required: true, message: 'Please input your confrimPassword!' }],
                                         })(
                                             <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} required type="password" placeholder="请输入您的密码"/>
                                         )}
                                     </FormItem>
+                                    {/* <FormItem label="账户">
+                                        <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="请输入您的账号" {...getFieldDecorator('r_userName')}/>
+                                    </FormItem>
+                                    <FormItem label="密码">
+                                        <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="请输入您的密码" {...getFieldDecorator('r_password')}/>
+                                    </FormItem>
+                                    <FormItem label="确认密码">
+                                        <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="请再次输入您的密码" {...getFieldDecorator('r_confirmPassword')}/>
+                                    </FormItem> */}
                                     <Button type="primary" htmlType="submit">注册</Button>
                                 </Form>
                             </TabPane>
