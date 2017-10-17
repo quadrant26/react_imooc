@@ -120,11 +120,13 @@ class MobileHeaderComponent extends React.Component{
         return (
             <div id="mobileHeader">
                 <header>
-                    <img src="./src/images/logo.png" alt="logo" title="logo" />
-                    <span>ReactNews</span>
+                    <a href="/">
+                        <img src="./src/images/logo.png" alt="logo" title="logo" />
+                        <span>ReactNews</span>
+                    </a>
                     {usershow}
-            </header>
-            <Modal title="用户中心" visible={this.state.modalVisible} onOk={() => this.setModalVisible(false)} onCancel={() => this.setModalVisible(false)} okText="关闭">
+                </header>
+                <Modal title="用户中心" visible={this.state.modalVisible} onOk={() => this.setModalVisible(false)} onCancel={() => this.setModalVisible(false)} okText="关闭">
                     <Tabs type="card" onChange={ this.callback.bind(this) }>
                         <TabPane tab="登录" key="1">
                             <Form layout="horizontal" onSubmit={this.handleSubmit.bind(this)}>
