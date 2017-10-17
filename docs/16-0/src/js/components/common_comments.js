@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Form, Input, Button, notification } from 'antd';
+import { Row, Col, Form, Input, Button, notification, Card } from 'antd';
 const FormItem = Form.Item;
 
 class CommonCommentComponent extends React.Component{
@@ -18,27 +18,23 @@ class CommonCommentComponent extends React.Component{
         fetch("http://newsapi.gugujiankong.com/Handler.ashx?action=getcomments&uniquekey=" + this.props.uniquekey, myFetchOptions)
         .then(response => response.json())
         .then(json => {
-            this.setState = {
-                comments : json
-            }
-            
-            console.log(this.setState);
+            this.setState({comments : json})
         })
     }
 
-    handleSubmit (e){
+    handleSubmit         (e){
         e.preventDefault();
         var myFetchOptions = { 
             method : "GET"
         }
-        var _this =this;
+        
         var formdata = this.props.form.getFieldsValue();
-        console.log(formdata);
         
         fetch("http://newsapi.gugujiankong.com/Handler.ashx?action=comment&userid=" + localStorage.userid + "&uniquekey=" + this.props.uniquekey + "&commnet=" + formdata.remark, myFetchOptions)
         .then(response => response.json())
         .then(json => {
-            _this.componentDidMount();
+            console.log(json);
+            this.componentDidMount();
         })
     }
 
@@ -57,20 +53,19 @@ class CommonCommentComponent extends React.Component{
     
     render (){
         let { getFieldDecorator } = this.props.form;
-        console.log( this.state );
         const { comments } = this.state;
+        console.log(comments);
         const commentList = comments.length
             ?
             comments.map((commentItem, index) => {
                 return (
-                    <Card key={index} title={commentItem.title} extra={<a href="#">发布于 {commentItem.datetime} </a>}>
-                        <p>{comment.Comments}</p>
+                    <Card key={index} title={commentItem.UserName} extra={<a href="#">发布于 {commentItem.datetime} </a>}>
+                        <p>{commentItem.Comments}</p>
                     </Card>
                 )
             }) 
             : '没有任何评论！';
         
-        console.log(comments);
         return (
             <div className="comment">
                 <Row>
@@ -79,7 +74,7 @@ class CommonCommentComponent extends React.Component{
                         <Form onSubmit={this.handleSubmit.bind(this)}>
                             <FormItem label="您的评论">
                                 {getFieldDecorator('remark', {
-                                    rules: [{ required: true, message: 'Please input your username!' }],
+                                    rules: [{ required: true, message: 'Please input your comments!' }],
                                 })(
                                     
                                     <Input type="textarea" placeholder="输入您的评论" required ></Input>
