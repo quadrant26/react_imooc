@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { Modal, Button, Link, Form, Menu, Icon, Row, Col, Input, Checkbox, Tabs, message } from 'antd';
+import { Modal, Button, Form, Menu, Icon, Row, Col, Input, Checkbox, Tabs, message } from 'antd';
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 const FormItem = Form.Item;
 const TabPane = Tabs.TabPane;
+import {Router, Route, Link, browserHistory} from 'react-router'
 
 class MobileHeaderComponent extends React.Component{
 
@@ -17,6 +18,20 @@ class MobileHeaderComponent extends React.Component{
             userNickName: '',
             userid: 0
         }
+    }
+
+    // localstorage 用户登录
+    componentDidMount (){
+        let userid = localStorage.userid;
+        let userNickName = localStorage.userNickName;
+        // 已经在本地保存了 用户信息
+        if( userid && userNickName){
+            this.setState({
+                hasLogined : true,
+                userNickName: userNickName,
+                userid: userid
+            })
+        };
     }
 
     // 设置模态框是否显示
@@ -34,34 +49,55 @@ class MobileHeaderComponent extends React.Component{
 
         //页面开始向 API 进行提交数据
         e.preventDefault();
-
+        
         var myFetchOptions = {
-			method: 'GET'
+            method: 'GET'
         };
         var formData = this.props.form.getFieldsValue();
         var url;
+
         
         // 判断是登录还是注册
-        if( this.state.action == "login"){
-            url = 'http://localhost:8866/react_imooc/login.php?g_username='+ formData.g_username +'&g_password=' + formData.g_password;
-        }else{
-            url = 'http://localhost:8866/react_imooc/reg.php?r_username='+ formData.r_username +'&r_password=' + formData.r_password  +'&r_confrimPassword=' + formData.r_confrimPassword ;
-        };
+        // if( this.state.action == "login"){
+        //     url = 'http://localhost:8866/react_imooc/login.php?g_username='+ formData.g_username +'&g_password=' + formData.g_password;
+        // }else{
+        //     url = 'http://localhost:8866/react_imooc/reg.php?r_username='+ formData.r_username +'&r_password=' + formData.r_password  +'&r_confrimPassword=' + formData.r_confrimPassword ;
+        // };
         
-        fetch(url)
+        // fetch(url)
+        fetch("http://newsapi.gugujiankong.com/Handler.ashx?action=" + this.state.action
+        + "&username="+formData.username+"&password="+formData.password
+        +"&r_userName=" + formData.r_userName + "&r_password="
+        + formData.r_password + "&r_confirmPassword="
+        + formData.r_confirmPassword, myFetchOptions)
         .then( res => res.json())
         .then( json => {
-            if( json.code === 1){
-                message.error(json.error_msg);
-            }else{
-                this.setModalVisible(false);
-                this.setState({
-                    userNickName : formData.g_username || formData.r_username,
-                    hasLogined: true,
-                    modalVisible: false
-                });
-            };
+            
+            // if( json.code === 1){
+            //     message.error(json.error_msg);
+            // }else{
+            //     this.setState({
+            //         userNickName : json.NickUserName ? json.NickUserName : formData.userName,
+            //         userid: json.UserId
+            //     });
+            //     localStorage.userid= json.UserId;
+            //     localStorage.userNickName = json.NickUserName ? json.NickUserName : formData.userName;
+            // };
+
+            this.setState({
+                userNickName : json.NickUserName,
+                userid: json.UserId
+            });
+            localStorage.userid= json.UserId;
+            localStorage.userNickName = json.NickUserName;
+
         });
+
+        if (this.state.action=="login") {
+            this.setState({hasLogined:true});
+        }
+        message.success("请求成功！");
+        this.setModalVisible(false);
     }
 
     // 登录还是注册弹出框显示
@@ -73,19 +109,11 @@ class MobileHeaderComponent extends React.Component{
         }
     }
 
-    // 退出登录
-    logout (){
-        this.setState({
-            userNickName : '',
-            hasLogined: false
-        })
-    }
-
     render () {
 
         const { getFieldDecorator } = this.props.form;
         const usershow = this.state.hasLogined ?
-            <Link><Icon type="inbox" onClick={this.logout.bind(this)}/></Link>
+            <Link to={`/usercenter`}><Icon type="inbox"/></Link>
             :
             <Icon type="setting" onClick={this.login.bind(this)}/>;
 
