@@ -44,7 +44,7 @@ export default class PcNewsDetailComponent extends React.Component{
                     <Col span={2}></Col>
                     <Col span={14} className="container">
                         <div className="articleContainer" dangerouslySetInnerHTML={this.createMarkup()}></div>
-                        <CommonCommentComponent></CommonCommentComponent>
+                        <CommonCommentComponent uniquekey={this.props.params.uniquekey}></CommonCommentComponent>
                     </Col>
                     <Col span={6}>
                         <PCNewsImageBlock count={30} type="top" cardTitle="相关新闻" imageWidth="150px"></PCNewsImageBlock>
