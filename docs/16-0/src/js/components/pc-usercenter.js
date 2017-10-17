@@ -47,7 +47,6 @@ export default class PcUserCenterComponent extends React.Component {
             this.setState({
                 usercomments: json
             })
-            console.log(json);
         })
     }
 
