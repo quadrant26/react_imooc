@@ -13,6 +13,10 @@ import MobileNewsDetailComponent from './components/mobile_news_detail';
 import PCIndexComponent from './components/pc_index';
 import MobileIndexComponent from './components/mobile_index';
 
+// 用户中心
+import PcUserCenterComponent from './components/pc-usercenter';
+import MobileUserCenterComponent from './components/mobile-usercenter';
+
 export default class IndexComponent extends React.Component{
     render() {
         return (
@@ -21,6 +25,7 @@ export default class IndexComponent extends React.Component{
                     <Router history={hashHistory}>
                         <Route path="/" component={PCIndexComponent}></Route>
                         <Route path="/details/:uniquekey" component={PcNewsDetailComponent}></Route>
+                        <Route path="/usercenter" component={PcUserCenterComponent}></Route>
                     </Router>
                     {/* <PCIndexComponent></PCIndexComponent> */}
                 </MediaQuery>
@@ -29,6 +34,7 @@ export default class IndexComponent extends React.Component{
                     <Router history={hashHistory}>
                         <Route path="/" component={MobileIndexComponent}></Route>
                         <Route path="/details/:uniquekey" component={MobileNewsDetailComponent}></Route>
+                        <Route path="/usercenter" component={MobileUserCenterComponent}></Route>
                     </Router>
                     {/* <MobileIndexComponent></MobileIndexComponent> */}
                 </MediaQuery>
