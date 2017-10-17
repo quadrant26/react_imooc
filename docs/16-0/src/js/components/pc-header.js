@@ -1,11 +1,12 @@
 import React from 'react';
 
 // use antd 栅格系统
-import { Modal, Button, Link, Form, Menu, Icon, Row, Col, Input, Checkbox, Tabs, message } from 'antd';
+import { Modal, Button, Form, Menu, Icon, Row, Col, Input, Checkbox, Tabs, message } from 'antd';
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 const FormItem = Form.Item;
 const TabPane = Tabs.TabPane;
+import { Link, Router, Route, browserHistory } from 'react-router';
 
 import 'antd/dist/antd';
 
@@ -40,6 +41,20 @@ class PcHeaderComponent extends React.Component{
         }
     };
 
+    // localstorage 用户登录
+    componentDidMount (){
+        let userid = localStorage.userid;
+        let userNickName = localStorage.userNickName;
+        // 已经在本地保存了 用户信息
+        if( userid && userNickName){
+            this.setState({
+                hasLogined : true,
+                userNickName: userNickName,
+                userid: userid
+            })
+        };
+    }
+
     // 提交
     handleSubmit (e){
 
@@ -68,7 +83,7 @@ class PcHeaderComponent extends React.Component{
 		+ formData.r_confirmPassword, myFetchOptions)
         .then( res => res.json())
         .then( json => {
-            console.log(json);
+            
             // if( json.code === 1){
             //     message.error(json.error_msg);
             // }else{
@@ -116,10 +131,10 @@ class PcHeaderComponent extends React.Component{
     render () {
         let { getFieldDecorator } = this.props.form;
         const userShow = this.state.hasLogined ? 
-            <Menu.Item key="register" class="register">
-                <Button type="dashed">{this.state.userNickName}</Button>
+            <Menu.Item key="logout" class="register">
+                <Button type="primary" htmlType="button">{this.state.userNickName}</Button>
                 &nbsp;&nbsp;
-                <Button type="dashed" htmlType="button">个人中心</Button>
+                <Link to={`/usercenter`}><Button type="dashed" htmlType="button">个人中心</Button></Link>
                 &nbsp;&nbsp;
                 <Button type="primary" ghost htmlType="button" onClick={this.logout.bind(this)}>退出</Button>
             </Menu.Item>
@@ -133,8 +148,10 @@ class PcHeaderComponent extends React.Component{
                 <Row>
                     <Col span={2}></Col>
                     <Col span={4} className="logo">
-                        <img src="./src/images/logo.png" alt="logo" title="logo" />
-                        <span>React News</span>
+                        <a href="/">
+                            <img src="./src/images/logo.png" alt="logo" title="logo" />
+                            <span>React News</span>
+                        </a>
                     </Col>
                     <Col span={16}>
                         <Menu mode="horizontal" onClick={this.handleClick.bind(this)} selectedKeys={[this.state.current]}>
