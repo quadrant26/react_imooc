@@ -33,7 +33,6 @@ class CommonCommentComponent extends React.Component{
         fetch("http://newsapi.gugujiankong.com/Handler.ashx?action=comment&userid=" + localStorage.userid + "&uniquekey=" + this.props.uniquekey + "&commnet=" + formdata.remark, myFetchOptions)
         .then(response => response.json())
         .then(json => {
-            console.log(json);
             this.componentDidMount();
         })
     }
@@ -54,7 +53,6 @@ class CommonCommentComponent extends React.Component{
     render (){
         let { getFieldDecorator } = this.props.form;
         const { comments } = this.state;
-        console.log(comments);
         const commentList = comments.length
             ?
             comments.map((commentItem, index) => {
