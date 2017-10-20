@@ -6,6 +6,8 @@ import MobileHeaderComponent from './mobile-header';
 import MobileFooterComponent from './mobile-footer';
 import MobileListComponent from './mobile_list';
 
+import MobileListPullRefreshComponent from './mobile_list_pull_refresh';
+
 import { Tabs, Icon, Carousel } from 'antd';
 const TabPane = Tabs.TabPane;
 
@@ -37,7 +39,7 @@ export default class MobileIndexComponent extends React.Component{
                         <MobileListComponent type="shehui" count={20}></MobileListComponent>
                     </TabPane>
                     <TabPane tab={<span><Icon type="appstore" />国内</span>} key="3">
-                        <MobileListComponent type="guonei" count={20}></MobileListComponent>
+                        <MobileListPullRefreshComponent type="guonei" count={20}></MobileListPullRefreshComponent>
                     </TabPane>
                     <TabPane tab={<span><Icon type="appstore" />娱乐</span>} key="4">
                         <MobileListComponent type="yule" count={20}></MobileListComponent>
